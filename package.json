@@ -1,0 +1,23 @@
+{
+  "name": "realtime-chat-rethinkdb",
+  "version": "1.0.0",
+  "description": "A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB.git"
+  },
+  "author": "Shannon Duncan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB/issues"
+  },
+  "homepage": "https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "rethinkdb": "^2.1.1"
+  }
+}
