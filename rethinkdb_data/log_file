@@ -73,3 +73,15 @@
 2015-11-13T14:54:49.990640162 0.154817s notice: Server ready, "shadowcodex1_realtime_chat_rethinkdb_2138036_7f1" a62b0d93-9828-42c1-8ceb-7b011db5ae98
 2015-11-13T14:54:51.637153429 1.801330s info: Table 8cf4acc8-9adc-4e9d-b680-abacfa4b5f7c: Starting a new Raft election for term 4.
 2015-11-13T14:54:51.643268890 1.807446s info: Table 8cf4acc8-9adc-4e9d-b680-abacfa4b5f7c: This server is Raft leader for term 4. Latest log index is 10.
+2015-11-13T15:38:25.626318978 0.146407s notice: Recursively removing directory /home/ubuntu/workspace/rethinkdb_data/tmp
+2015-11-13T15:38:25.629399018 0.149489s notice: Running rethinkdb 2.2.0~0trusty (GCC 4.8.2)...
+2015-11-13T15:38:25.632343074 0.152432s notice: Running on Linux 4.2.0-c9 x86_64
+2015-11-13T15:38:25.632389726 0.152477s notice: Loading data from directory /home/ubuntu/workspace/rethinkdb_data
+2015-11-13T15:38:25.648091951 0.168181s info: Automatically using cache size of 14298 MB
+2015-11-13T15:38:25.772299711 0.292387s notice: Listening for intracluster connections on port 29015
+2015-11-13T15:38:25.788333692 0.308421s notice: Listening for client driver connections on port 28015
+2015-11-13T15:38:25.788524271 0.308612s notice: Listening for administrative HTTP connections on port 8081
+2015-11-13T15:38:25.925061024 0.445149s notice: Listening on addresses: 127.0.0.1, 172.17.3.228, ::1, fe80::42:acff:fe11:3e4%1992
+2015-11-13T15:38:25.925076467 0.445164s notice: Server ready, "shadowcodex1_realtime_chat_rethinkdb_2138036_7f1" a62b0d93-9828-42c1-8ceb-7b011db5ae98
+2015-11-13T15:38:27.554034790 2.074123s info: Table 8cf4acc8-9adc-4e9d-b680-abacfa4b5f7c: Starting a new Raft election for term 5.
+2015-11-13T15:38:27.559598346 2.079686s info: Table 8cf4acc8-9adc-4e9d-b680-abacfa4b5f7c: This server is Raft leader for term 5. Latest log index is 13.
