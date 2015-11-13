@@ -4,9 +4,11 @@
         
     </head>
     <body>
-        <form>
-            <input type="text" id="TheInput" class=".message-input"/>
+        <form id="TheForm">
+            Name: <input type="text" id="TheName" class=".message-input"/>
+            Message:<input type="text" id="TheInput" class=".message-input"/>
             <input type="button" id="TheButton" class=".message-btn" value="Send" />
+            <input type="button" id="TheClear" value="Clear UserName Cache..." />
         </form>
         <br>
         Messages Below:
@@ -17,30 +19,66 @@
         
         <br>
         
-        
-        
-        
         <!-- Bring in JQuery -->
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <!-- Bring in Socket.io -->
         <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
         <script>
             var socket = io.connect();
+            $('#TheInput').focus();
+            if(localStorage.getItem("Name") === null || localStorage.getItem("Name") === "null")
+            {
+              $('#TheName').val(Math.floor((Math.random() * 10000000000) + 1));
+            } else {
+              $('#TheName').val(localStorage.getItem("Name"));  
+            }
+            
             
             // loads all previous messages
             $.get('/message/all', function(result) {
               var messages = "";
               result.map(function(obj) {
-                messages += "<li>Someone said: " + obj.message + "</li>";
+                messages += "<li>"+ obj.name + ": " + obj.message + "</li>";
               });
               $('.messages').html(messages);
             });
+            
+            //Hit enter to submit form...
+            $('#TheInput').bind("enterKey",function(e){
+               console.log("Submitting message!");
+              var message = $('#TheInput').val();
+              var name = $('#TheName').val();
+              
+              // Set session variable to remember typed name...
+              localStorage.setItem("Name", name);
+                $.post('/message/send', {message: message, name: name}, function(result) {
+                  console.log(result);
+                });
+                
+              $('#TheInput').val("");
+            });
+            $('#TheInput').keyup(function(e){
+                if(e.keyCode == 13)
+                {
+                    $(this).trigger("enterKey");
+                }
+            });
+            
+            // Clear username cache
+            $('#TheClear').click(function() {
+                localStorage.setItem("Name", null);
+            })
         
             // sends a message to the server
             $('#TheButton').click(function() {
+              
               console.log("Submitting message!");
               var message = $('#TheInput').val();
-                $.post('/message/send', {message: message}, function(result) {
+              var name = $('#TheName').val();
+              
+              // Set session variable to remember typed name...
+              localStorage.setItem("Name", name);
+                $.post('/message/send', {message: message, name: name}, function(result) {
                   console.log(result);
                 });
             })
@@ -49,7 +87,7 @@
             // Recieves new messages
             socket.on('new_message', function(data) {
               console.log(data);
-              $('.messages').prepend("<li>" + data.new_val.message + "</li>");
+              $('.messages').prepend("<li>" + data.new_val.name + ": " + data.new_val.message + "</li>");
             });
         </script>
     </body>

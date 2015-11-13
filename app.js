@@ -19,6 +19,7 @@ console.log("Done!");
 console.log("Setup databases if they don't already exist...");
 async.waterfall([
   function(finished) {
+    console.log("Starting waterfall");
     r.dbList().contains('messages_db')
       .run()
       .then(function(result) {
@@ -29,6 +30,7 @@ async.waterfall([
       })
   },
   function(dbExists, finished) {
+    console.log("Check dbexits");
     if (dbExists == false) {
       r.dbCreate('messages_db')
         .run()
@@ -67,6 +69,7 @@ async.waterfall([
     }
   },
   function(tableIndexed, finished) {
+    console.log("Check Index");
     if (tableIndexed == false) {
       r.db('messages_db').table('messages').indexCreate('date')
         .run()
@@ -74,6 +77,7 @@ async.waterfall([
           finished(null);
         })
         .error(function(err) {
+          console.log("Error indexing... : " + err);
           finished(err);
         })
     } else {
@@ -82,77 +86,85 @@ async.waterfall([
   }
 ], function(err) {
   if (err) throw err;
-});
-console.log("Done...");
-
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-// Set send rest API
-console.log("Setup Send Message REST API..");
-app.post('/message/send', function(req,res,next) {
-  console.log("New message incoming!!");
-  var message = req.body.message;
-  r.db('messages_db').table('messages')
-    .insert({
-      message: message,
-      date: new Date()
-    })
-    .run()
-    .then(function(result) {
-      res.send('Message sent!');
-    })
-    .error(function(err) {
-      res.status(500).send('Internal Server Error');
-    })
-});
-console.log("Done..");
-
+  console.log("Done with table evaluation...");
   
-console.log("Setup get all messages REST API");
-app.get('/message/all', function(req,res,next) {
-  r.db('messages_db').table('messages')
-    .orderBy({index: r.asc('date')})
-    .run()
-    .then(function(result) {
-      res.send(result);
-    })
-    .error(function(err) {
-      res.status(500).send('Internal Server Error');
-    })
-});
-console.log("Done");
+  // Start Main Program
+  app.use(bodyParser.json()); // for parsing application/json
+  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
   
-//Create socket.io event
-console.log("Setup socket.io connection.....");
-io.on('connection', function(socket) {
-  console.log('New client connected');
-})
-console.log("Done.....");
-
-  
-  
-console.log("Setup socket.io emitter!!!!");
-r.db('messages_db').table('messages')
-.changes()
-.run()
-.then(function(cursor) {
-  cursor.each(function(err, result) {
-    console.log(result);
-    io.emit('new_message', result);
+  // Set send rest API
+  console.log("Setup Send Message REST API..");
+  app.post('/message/send', function(req,res,next) {
+    console.log("New message incoming!!");
+    var message = req.body.message;
+    var name = req.body.name;
+    r.db('messages_db').table('messages')
+      .insert({
+        name: name,
+        message: message,
+        date: new Date()
+      })
+      .run()
+      .then(function(result) {
+        res.send('Message sent!');
+      })
+      .error(function(err) {
+        res.status(500).send('Internal Server Error');
+      })
   });
-});
-console.log("Done!!!!");
+  console.log("Done..");
+  
+    
+  console.log("Setup get all messages REST API");
+  app.get('/message/all', function(req,res,next) {
+    r.db('messages_db').table('messages')
+      .orderBy({index: r.desc('date')})
+      .run()
+      .then(function(result) {
+        res.send(result);
+      })
+      .error(function(err) {
+        res.status(500).send('Internal Server Error');
+        console.log("Error getting all messages");
+        console.log(err);
+      })
+  });
+  console.log("Done");
+    
+  //Create socket.io event
+  console.log("Setup socket.io connection.....");
+  io.on('connection', function(socket) {
+    console.log('New client connected');
+  })
+  console.log("Done.....");
+  
+    
+    
+  console.log("Setup socket.io emitter!!!!");
+  r.db('messages_db').table('messages')
+  .changes()
+  .run()
+  .then(function(cursor) {
+    cursor.each(function(err, result) {
+      console.log(result);
+      io.emit('new_message', result);
+    });
+  });
+  console.log("Done!!!!");
+  
+  process.on('uncaughtException', function(err) {
+    console.log(err);
+  })
+  
+  //Serve the static html page.
+  var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
+  server.listen(port);
+  
+  
+  app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+  });
+  // End main Program
+  
+});// End Database Setup Checker...
 
-process.on('uncaughtException', function(err) {
-  console.log(err);
-})
-
-//Serve the static html page.
-var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
-server.listen(port);
-
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
