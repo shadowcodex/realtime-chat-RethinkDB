@@ -19,8 +19,7 @@ git clone http://github.com/isaacs/nave.git
 sudo ./nave/nave.sh usemain stable
 # If you just want nodejs and npm but not dependencies, then stop here.
 
-npm install rethinkdb
-npm install express
+npm install
 
 #run realtime chat
 sudo /usr/local/bin/node ./app.js 80 # change `80` to `8080` for development purposes.
