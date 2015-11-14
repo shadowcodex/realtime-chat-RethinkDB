@@ -24,9 +24,9 @@ $.get('/message/all', function(result) {
     messages += '<br>';
     messages += '</li>';
     messages += '<li></li>';
-    
+    messages += '<li><span class="notification">[Showing last 100 messages]</li>'
     result.map(function(obj) {
-        messages += "<li><span class='datetime'>["+ obj.date + "]</span> " + obj.name + ": " + obj.message + "</li>";
+        messages += '<li><span class="datetime">['+ obj.date + ']</span> ' + obj.name + ': ' + obj.message + '</li>';
     });
     
     $('.messages').html(messages);

@@ -120,6 +120,7 @@ async.waterfall([
   app.get('/message/all', function(req,res,next) {
     r.db('messages_db').table('messages')
       .orderBy({index: r.desc('date')})
+      .limit(100)
       .run()
       .then(function(result) {
         res.send(result);
