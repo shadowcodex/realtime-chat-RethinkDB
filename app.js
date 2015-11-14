@@ -1,5 +1,6 @@
 console.log("Setting up dependencies...");
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require("http").createServer(app);
 var async = require('async');
 var io = require('socket.io')(server);
@@ -140,7 +141,7 @@ async.waterfall([
   
     
     
-  console.log("Setup socket.io emitter!!!!");
+  console.log("Setup socket.io emitter for messages!!!!");
   r.db('messages_db').table('messages')
   .changes()
   .run()
@@ -160,10 +161,8 @@ async.waterfall([
   var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
   server.listen(port);
   
+  app.use('/', express.static(__dirname + '/public'));
   
-  app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-  });
   // End main Program
   
 });// End Database Setup Checker...

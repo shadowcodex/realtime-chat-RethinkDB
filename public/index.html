@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />
+      <style>
+        .message-input {
+          width:50%;
+          max-width:50%;
+          min-width:30px;
+        }
+        
+        .messages {
+          list-style-type: none;
+        }
+        
+        .datetime {
+          color: teal;
+          font-style:italic;
+          font-weight:700;
+          font-size:10px;
+        }
+      </style>
+        
+    </head>
+    <body>
+      <div class="container">
+        <br>
+        <div class="row">
+          <form id="TheForm">
+            <div class="col-sm-6">
+              <div class="input-group">
+                <div class="input-group-addon">Enter Message:</div>
+                <input type="text" id="TheInput" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <input type="button" id="TheButton" class="btn btn-primary" value="Send" />
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <div class="input-group-addon">Name:</div>
+                <input type="text" id="TheName" class="form-control"/>    
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <input type="button" id="TheClear" class="btn btn-warning" value="Clear UserName Cache..." />
+            </div>
+          </form>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-10">
+            <ul class="messages">
+                <!-- Messages will be inserted as li's here -->
+            </ul>    
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <br>
+              <div style="height: 2px; background-color:green; color:green; text-align: center">
+                <span style="background-color: white; position: relative; top: -0.6em;">
+                  &nbsp;Online&nbsp;
+                </span>
+              </div>
+              <br>
+              <div id="TheOnlineUsers"></div>
+            </div>
+            <div class="row">
+              <br>
+              <div style="height: 2px; background-color:grey; color:grey; text-align: center">
+                <span style="background-color: white; position: relative; top: -0.6em;">
+                  &nbsp;Online&nbsp;
+                </span>
+              </div>
+              <br>
+              <div id="TheOfflineUsers"></div>
+            </div>
+            This is the user column
+          </div>
+        </div>
+      </div>
+        
+      <!-- Bring in JQuery -->
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+      <!-- Bring in Socket.io -->
+      <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+      <!-- Bring in Bootstrap JS -->
+      <script src="/js/bootstrap.min.js"></script>
+      <!-- Bring in Chat Logic -->
+      <script src="/js/connect.js"></script>
+    </body>
+</html>
