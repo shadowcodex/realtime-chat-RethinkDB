@@ -7,6 +7,9 @@ var io = require('socket.io')(server);
 var r = require('rethinkdbdash')();
 var bodyParser = require('body-parser');
 
+var onlineUsers = {};
+var online = 0;
+
 console.log("Done!");
 
 // console.log("Connect to RethinkDB!!");
@@ -115,7 +118,8 @@ async.waterfall([
   });
   console.log("Done..");
   
-    
+  
+  // Set get messages API
   console.log("Setup get all messages REST API");
   app.get('/message/all', function(req,res,next) {
     r.db('messages_db').table('messages')
@@ -136,8 +140,26 @@ async.waterfall([
   //Create socket.io event
   console.log("Setup socket.io connection.....");
   io.on('connection', function(socket) {
-    console.log('New client connected');
-  })
+    console.log('New client connected ' + socket.id);
+    
+    socket.on('namechange', function(data){
+      console.log(socket.id + " Changed his/her name");
+      onlineUsers[socket.id] =  data.name;
+      socket.emit('online', onlineUsers);
+    });
+    
+    socket.on('newuser', function(data){
+      console.log("new user recieved");
+      onlineUsers[socket.id] =  data.name;
+      socket.emit('online', onlineUsers);
+    });
+    
+    socket.on('disconnect', function() {
+      console.log(socket.id + " client disconnected");
+      delete onlineUsers[socket.id];
+      socket.broadcast.emit('online', onlineUsers);
+    });
+  });
   console.log("Done.....");
   
     

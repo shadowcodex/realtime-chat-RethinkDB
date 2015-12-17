@@ -58,6 +58,7 @@ $('#TheInput').keyup(function(e){
 // Clear username cache
 $('#TheClear').click(function() {
   localStorage.setItem("Name", $('#TheName').val());
+  socket.emit('namechange', { name: localStorage.getItem("Name")});
 })
 
 // sends a message to the server
@@ -74,6 +75,23 @@ localStorage.setItem("Name", name);
   });
 })
 
+// Send username
+socket.on('connect', function(){
+  socket.emit('newuser', { name: localStorage.getItem("Name")});  
+});
+
+
+// Recieve online Users
+socket.on('online', function(data) {
+  console.log(JSON.stringify(data));
+  var userlist = "<ul>";
+  $.each(data, function(key, value){
+    console.log(value);
+    userlist += "<li>" + value + "</li>";
+  })
+  userlist += "</ul>";
+  $('#TheOnlineUsers').html(userlist)
+});
 
 // Recieves new messages
 socket.on('new_message', function(data) {
