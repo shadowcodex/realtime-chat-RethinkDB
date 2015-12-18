@@ -30,11 +30,15 @@ We don't want to use port 8080 on Cloud9 for the rethinkdb admin console. This p
 
 ```rethinkdb --bind all --http-port 8081```
 
-## Install Node Application
+## Install Dependencies
 
-You can either run `./install.sh` on your machine if you do not have nodejs already installed. 
+To install the dependencies run the following commands
 
-If you already have nodejs installed then just run `npm install` in the folder of the cloned app.
+```shell
+$ npm install -g bower # globablly install Bower package manager
+$ npm install          # install local npm build / test dependencies
+$ bower install        # install local javascript and css dependencies
+```
 
 
 ## Run the app
