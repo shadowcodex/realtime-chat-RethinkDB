@@ -20,7 +20,7 @@ describe("Test All User Sockets", function(){
     
     var testNameChange = function (tuser){
         client.emit('namechange', tuser);
-    }
+    };
     
     beforeEach(function(done){
         client = io.connect(socketURL, options);

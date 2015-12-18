@@ -9,6 +9,25 @@ module.exports = function(grunt) {
           unit: {
               configFile: 'test/karma.conf.js'
           }
+      },
+      mrdoc: {
+        all: {
+          src: 'src',
+          target: 'docs',
+          options: {
+            // task specific options
+          }
+        }
+      },
+      copy: {
+        main: {
+          src: ["app.js"],
+          dest: 'src/app.js'
+        },
+        connect: {
+          src: ["public/js/connect.js"],
+          dest: 'src/connect.js'
+        }
       }
     });
     
@@ -18,12 +37,18 @@ module.exports = function(grunt) {
     // Load karma plugin
     grunt.loadNpmTasks('grunt-karma');
     
-    // Load nodemon plugin
-    grunt.loadNpmTasks('grunt-nodemon');
+    // Load mrdoc plugin
+    grunt.loadNpmTasks('grunt-mrdoc');
+    
+    // Load copy plugin
+    grunt.loadNpmTasks('grunt-contrib-copy');
     
     // Register jshint task
     grunt.registerTask('default', ['jshint']);
     
     // Register Test task
     grunt.registerTask('test', ['karma']);
+    
+    // Register Document Task
+    grunt.registerTask('doc', ['copy', 'mrdoc']);
 };

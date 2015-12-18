@@ -2,3 +2,5 @@
 notes.txt
 /rethinkdb_data/*
 /bower_components/*
+/docs/*
+/src/*
