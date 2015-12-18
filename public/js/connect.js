@@ -24,7 +24,7 @@ $.get('/message/all', function(result) {
     messages += '<br>';
     messages += '</li>';
     messages += '<li></li>';
-    messages += '<li><span class="notification">[Showing last 100 messages]</li>'
+    messages += '<li><span class="notification">[Showing last 100 messages]</li>';
     result.map(function(obj) {
         messages += '<li><span class="datetime">['+ obj.date + ']</span> ' + obj.name + ': ' + obj.message + '</li>';
     });
@@ -59,7 +59,7 @@ $('#TheInput').keyup(function(e){
 $('#TheClear').click(function() {
   localStorage.setItem("Name", $('#TheName').val());
   socket.emit('namechange', { name: localStorage.getItem("Name")});
-})
+});
 
 // sends a message to the server
 $('#TheButton').click(function() {
@@ -73,7 +73,7 @@ localStorage.setItem("Name", name);
   $.post('/message/send', {message: message, name: name}, function(result) {
     console.log(result);
   });
-})
+});
 
 // Send username
 socket.on('connect', function(){
@@ -88,9 +88,9 @@ socket.on('online', function(data) {
   $.each(data, function(key, value){
     console.log(value);
     userlist += "<li>" + value + "</li>";
-  })
+  });
   userlist += "</ul>";
-  $('#TheOnlineUsers').html(userlist)
+  $('#TheOnlineUsers').html(userlist);
 });
 
 // Recieves new messages

@@ -27,15 +27,15 @@ async.waterfall([
     r.dbList().contains('messages_db')
       .run()
       .then(function(result) {
-        finished(null, result)
+        finished(null, result);
       })
       .error(function(err) {
         finished(err);
-      })
+      });
   },
   function(dbExists, finished) {
     console.log("Check dbexits");
-    if (dbExists == false) {
+    if (dbExists === false) {
       r.dbCreate('messages_db')
         .run()
         .then(function() {
@@ -59,7 +59,7 @@ async.waterfall([
       });
   },
   function(tableExists, finished) {
-    if (tableExists == false) {
+    if (tableExists === false) {
       r.db('messages_db').tableCreate('messages')
         .run()
         .then(function(result) {
@@ -67,14 +67,14 @@ async.waterfall([
         })
         .error(function(err) {
           finished(err);
-        })
+        });
     } else {
       finished(null, true);
     }
   },
   function(tableIndexed, finished) {
     console.log("Check Index");
-    if (tableIndexed == false) {
+    if (tableIndexed === false) {
       r.db('messages_db').table('messages').indexCreate('date')
         .run()
         .then(function(result) {
@@ -83,7 +83,7 @@ async.waterfall([
         .error(function(err) {
           console.log("Error indexing... : " + err);
           finished(err);
-        })
+        });
     } else {
       finished(null);
     }
@@ -93,6 +93,15 @@ async.waterfall([
   console.log("Done with table evaluation...");
   
   // Start Main Program
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  
+  
   app.use(bodyParser.json()); // for parsing application/json
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
   
@@ -114,7 +123,7 @@ async.waterfall([
       })
       .error(function(err) {
         res.status(500).send('Internal Server Error');
-      })
+      });
   });
   console.log("Done..");
   
@@ -133,7 +142,7 @@ async.waterfall([
         res.status(500).send('Internal Server Error');
         console.log("Error getting all messages");
         console.log(err);
-      })
+      });
   });
   console.log("Done");
     
@@ -178,7 +187,7 @@ async.waterfall([
   
   process.on('uncaughtException', function(err) {
     console.log(err);
-  })
+  });
   
   //Serve the static html page.
   var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
@@ -188,6 +197,13 @@ async.waterfall([
   app.use('/static', express.static(__dirname + '/bower_components'));
   
   // End main Program
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
   
 });// End Database Setup Checker...
 
