@@ -1,0 +1,23 @@
+{
+  "name": "Realtime-Chat",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB",
+  "authors": [
+    "Shannon Duncan <jsduncan98@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

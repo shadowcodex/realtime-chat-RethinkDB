@@ -185,6 +185,7 @@ async.waterfall([
   server.listen(port);
   
   app.use('/', express.static(__dirname + '/public'));
+  app.use('/static', express.static(__dirname + '/bower_components'));
   
   // End main Program
   
