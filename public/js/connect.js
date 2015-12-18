@@ -78,8 +78,9 @@ localStorage.setItem("Name", name);
 // Send username
 socket.on('connect', function(){
   socket.emit('newuser', { name: localStorage.getItem("Name")});  
+  
+  
 });
-
 
 // Recieve online Users
 socket.on('online', function(data) {
@@ -92,6 +93,7 @@ socket.on('online', function(data) {
   userlist += "</ul>";
   $('#TheOnlineUsers').html(userlist);
 });
+
 
 // Recieves new messages
 socket.on('new_message', function(data) {

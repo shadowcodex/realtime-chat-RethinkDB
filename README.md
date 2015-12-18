@@ -40,9 +40,26 @@ $ npm install          # install local npm build / test dependencies
 $ bower install        # install local javascript and css dependencies
 ```
 
-
 ## Run the app
 
 You can run the app with the following command `node app.js`. You can then go to your browser and view the application. 
 
 Type text in the box and hit send, it should start working!
+
+
+## Run Tests
+
+To run test you should run the following commands:
+
+```shell
+$ node app.js       # starts server
+$ grunt test        # tests against server
+```
+
+Todo
+
+* ~~Jasmine Tests~~
+* ~~Test new user socket~~
+* ~~Test user change name socket~~
+* Test new messages
+* Test get all messages

@@ -154,19 +154,19 @@ async.waterfall([
     socket.on('namechange', function(data){
       console.log(socket.id + " Changed his/her name");
       onlineUsers[socket.id] =  data.name;
-      socket.emit('online', onlineUsers);
+      io.emit('online', onlineUsers);
     });
     
     socket.on('newuser', function(data){
-      console.log("new user recieved");
+      console.log("new user recieved" + data.name);
       onlineUsers[socket.id] =  data.name;
-      socket.emit('online', onlineUsers);
+      io.emit('online', onlineUsers);
     });
     
     socket.on('disconnect', function() {
       console.log(socket.id + " client disconnected");
       delete onlineUsers[socket.id];
-      socket.broadcast.emit('online', onlineUsers);
+      io.emit('online', onlineUsers);
     });
   });
   console.log("Done.....");
@@ -195,6 +195,8 @@ async.waterfall([
   
   app.use('/', express.static(__dirname + '/public'));
   app.use('/static', express.static(__dirname + '/bower_components'));
+  
+  console.log("listening on port: " + port);
   
   // End main Program
   // ###########################################################################
