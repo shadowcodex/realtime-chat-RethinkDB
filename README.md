@@ -56,15 +56,6 @@ $ node app.js       # starts server
 $ grunt test        # tests against server
 ```
 
-Todo
-
-* ~~Jasmine Tests~~
-* ~~Test new user socket~~
-* ~~Test user change name socket~~
-* Test new messages
-* Test get all messages
-* 
-
 ## Generate Documentation
 
 To generate documentation then you just have to run the following command:
