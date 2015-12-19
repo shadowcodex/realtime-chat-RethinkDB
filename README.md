@@ -3,6 +3,8 @@
 # realtime-chat-RethinkDB
 A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB
 
+Full Documentation Available [Documentation Link](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
+
 ## Need to know info:
 
 RethinkDB - Node Installation Info: [https://www.rethinkdb.com/docs/install-drivers/javascript/](https://www.rethinkdb.com/docs/install-drivers/javascript/)
