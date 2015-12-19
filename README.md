@@ -63,3 +63,12 @@ Todo
 * ~~Test user change name socket~~
 * Test new messages
 * Test get all messages
+* 
+
+## Generat Documentation
+
+To generate documentation then you just have to run the following command:
+
+```shell
+$ grunt doc
+```

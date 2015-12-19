@@ -13,10 +13,7 @@ module.exports = function(grunt) {
       mrdoc: {
         all: {
           src: 'src',
-          target: 'docs',
-          options: {
-            // task specific options
-          }
+          target: 'docs'
         }
       },
       copy: {
