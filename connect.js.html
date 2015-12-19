@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>mr-doc</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cayman.min.css">
+    <link rel="stylesheet" href="css/prism.min.css">
+    <link rel="stylesheet" href="css/index.min.css">
+    <link rel="stylesheet" href="css/docs.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Mr. Doc</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>mr-doc</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li><a href="index.html">Main</a></li>
+            <li><a href="app.js.html">app.js</a></li>
+            <li class="active"><a href="connect.js.html">connect.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#socket"><i class="alert alert-success"></i><span>socket</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="socket">
+            <h1>socket</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>socket</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"></div>
+          <pre><code class="language-javascript">var socket = io.connect();
+
+$('#TheInput').focus();
+
+if(localStorage.getItem(&quot;Name&quot;) === null || localStorage.getItem(&quot;Name&quot;) === &quot;null&quot;)
+{
+    $('#TheName').val(Math.floor((Math.random() * 10000000000) + 1));
+} else {
+    $('#TheName').val(localStorage.getItem(&quot;Name&quot;));  
+}
+
+
+// loads all previous messages
+$.get('/message/all', function(result) {
+    var messages = &quot;&quot;;
+    
+    messages += '&lt;li&gt;';
+    messages += '&lt;br&gt;';
+    messages += '&lt;div style=&quot;height: 2px; color:red; background-color: red; text-align: center&quot;&gt;';
+    messages += '&lt;span style=&quot;background-color: white; position: relative; top: -0.6em;&quot;&gt;';
+    messages += '&amp;nbsp;Messages Before You Logged On&amp;nbsp;';
+    messages += '&lt;/span&gt;';
+    messages += '&lt;/div&gt;';
+    messages += '&lt;br&gt;';
+    messages += '&lt;/li&gt;';
+    messages += '&lt;li&gt;&lt;/li&gt;';
+    messages += '&lt;li&gt;&lt;span class=&quot;notification&quot;&gt;[Showing last 100 messages]&lt;/li&gt;';
+    result.map(function(obj) {
+        messages += '&lt;li&gt;&lt;span class=&quot;datetime&quot;&gt;['+ obj.date + ']&lt;/span&gt; ' + obj.name + ': ' + obj.message + '&lt;/li&gt;';
+    });
+    
+    $('.messages').html(messages);
+});
+
+//Hit enter to submit form bind...
+$('#TheInput').bind(&quot;enterKey&quot;,function(e){
+    console.log(&quot;Submitting message!&quot;);
+    var message = $('#TheInput').val();
+    var name = $('#TheName').val();
+
+    // Set session variable to remember typed name...
+    localStorage.setItem(&quot;Name&quot;, name);
+    $.post('/message/send', {message: message, name: name}, function(result) {
+    console.log(result);
+    });
+  
+    $('#TheInput').val(&quot;&quot;);
+});
+
+// Hit enter to submit form action...
+$('#TheInput').keyup(function(e){
+  if(e.keyCode == 13)
+  {
+      $(this).trigger(&quot;enterKey&quot;);
+  }
+});
+
+// Clear username cache
+$('#TheClear').click(function() {
+  localStorage.setItem(&quot;Name&quot;, $('#TheName').val());
+  socket.emit('namechange', { name: localStorage.getItem(&quot;Name&quot;)});
+});
+
+// sends a message to the server
+$('#TheButton').click(function() {
+
+console.log(&quot;Submitting message!&quot;);
+var message = $('#TheInput').val();
+var name = $('#TheName').val();
+
+// Set session variable to remember typed name...
+localStorage.setItem(&quot;Name&quot;, name);
+  $.post('/message/send', {message: message, name: name}, function(result) {
+    console.log(result);
+  });
+});
+
+// Send username
+socket.on('connect', function(){
+  socket.emit('newuser', { name: localStorage.getItem(&quot;Name&quot;)});  
+  
+  
+});
+
+// Recieve online Users
+socket.on('online', function(data) {
+  console.log(JSON.stringify(data));
+  var userlist = &quot;&lt;ul&gt;&quot;;
+  $.each(data, function(key, value){
+    console.log(value);
+    userlist += &quot;&lt;li&gt;&quot; + value + &quot;&lt;/li&gt;&quot;;
+  });
+  userlist += &quot;&lt;/ul&gt;&quot;;
+  $('#TheOnlineUsers').html(userlist);
+});
+
+
+// Recieves new messages
+socket.on('new_message', function(data) {
+console.log(data);
+$('.messages').prepend(&quot;&lt;li&gt;&lt;span class='datetime'&gt;[&quot; + data.new_val.date + &quot;]&lt;/span&gt; &quot; + data.new_val.name + &quot;: &quot; + data.new_val.message + &quot;&lt;/li&gt;&quot;);
+});</code></pre>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/mr-doc/mr-doc">Mr. Doc </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Mr. Doc is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="js/twitter-widget.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-transition.min.js"></script>
+    <script src="js/bootstrap-scrollspy.min.js"></script>
+    <script src="js/bootstrap-dropdown.min.js"></script>
+    <script src="js/bootstrap-collapse.min.js"></script>
+    <script src="js/bootstrap-affix.min.js"></script>
+    <script src="js/prism.min.js"></script>
+    <script src="js/index.min.js"></script>
+  </body>
+</html>

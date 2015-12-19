@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>mr-doc</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cayman.min.css">
+    <link rel="stylesheet" href="css/prism.min.css">
+    <link rel="stylesheet" href="css/index.min.css">
+    <link rel="stylesheet" href="css/docs.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Mr. Doc</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>mr-doc</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li><a href="index.html">Main</a></li>
+            <li class="active"><a href="app.js.html">app.js</a></li>
+            <li><a href="connect.js.html">connect.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#express"><i class="alert alert-success"></i><span>express</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="express">
+            <h1>express</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>express</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"></div>
+          <pre><code class="language-javascript">var express = require('express');
+var app = express();
+var server = require(&quot;http&quot;).createServer(app);
+var async = require('async');
+var io = require('socket.io')(server);
+var r = require('rethinkdbdash')();
+var bodyParser = require('body-parser');
+
+var onlineUsers = {};
+var online = 0;
+
+console.log(&quot;Done!&quot;);
+
+// console.log(&quot;Connect to RethinkDB!!&quot;);
+// var connection = null;
+// r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
+//     if (err) throw err;
+//     connection = conn;
+//     console.log(&quot;Done!!&quot;);
+// });
+
+console.log(&quot;Setup databases if they don't already exist...&quot;);
+async.waterfall([
+  function(finished) {
+    console.log(&quot;Starting waterfall&quot;);
+    r.dbList().contains('messages_db')
+      .run()
+      .then(function(result) {
+        finished(null, result);
+      })
+      .error(function(err) {
+        finished(err);
+      });
+  },
+  function(dbExists, finished) {
+    console.log(&quot;Check dbexits&quot;);
+    if (dbExists === false) {
+      r.dbCreate('messages_db')
+        .run()
+        .then(function() {
+          finished(null);
+        })
+        .error(function(err) {
+          finished(err);
+        });
+    } else {
+      finished(null);
+    }
+  },
+  function(finished) {
+    r.db('messages_db').tableList().contains('messages')
+      .run()
+      .then(function(result) {
+        finished(null,result);
+      })
+      .error(function(err) {
+        finished(err);
+      });
+  },
+  function(tableExists, finished) {
+    if (tableExists === false) {
+      r.db('messages_db').tableCreate('messages')
+        .run()
+        .then(function(result) {
+          finished(null, false);
+        })
+        .error(function(err) {
+          finished(err);
+        });
+    } else {
+      finished(null, true);
+    }
+  },
+  function(tableIndexed, finished) {
+    console.log(&quot;Check Index&quot;);
+    if (tableIndexed === false) {
+      r.db('messages_db').table('messages').indexCreate('date')
+        .run()
+        .then(function(result) {
+          finished(null);
+        })
+        .error(function(err) {
+          console.log(&quot;Error indexing... : &quot; + err);
+          finished(err);
+        });
+    } else {
+      finished(null);
+    }
+  }
+], function(err) {
+  if (err) throw err;
+  console.log(&quot;Done with table evaluation...&quot;);
+  
+  // Start Main Program
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  
+  
+  app.use(bodyParser.json()); // for parsing application/json
+  app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+  
+  // Set send rest API
+  console.log(&quot;Setup Send Message REST API..&quot;);
+  app.post('/message/send', function(req,res,next) {
+    console.log(&quot;New message incoming!!&quot;);
+    var message = req.body.message;
+    var name = req.body.name;
+    r.db('messages_db').table('messages')
+      .insert({
+        name: name,
+        message: message,
+        date: new Date()
+      })
+      .run()
+      .then(function(result) {
+        res.send('Message sent!');
+      })
+      .error(function(err) {
+        res.status(500).send('Internal Server Error');
+      });
+  });
+  console.log(&quot;Done..&quot;);
+  
+  
+  // Set get messages API
+  console.log(&quot;Setup get all messages REST API&quot;);
+  app.get('/message/all', function(req,res,next) {
+    r.db('messages_db').table('messages')
+      .orderBy({index: r.desc('date')})
+      .limit(100)
+      .run()
+      .then(function(result) {
+        res.send(result);
+      })
+      .error(function(err) {
+        res.status(500).send('Internal Server Error');
+        console.log(&quot;Error getting all messages&quot;);
+        console.log(err);
+      });
+  });
+  console.log(&quot;Done&quot;);
+    
+  //Create socket.io event
+  console.log(&quot;Setup socket.io connection.....&quot;);
+  io.on('connection', function(socket) {
+    console.log('New client connected ' + socket.id);
+    
+    socket.on('namechange', function(data){
+      console.log(socket.id + &quot; Changed his/her name&quot;);
+      onlineUsers[socket.id] =  data.name;
+      io.emit('online', onlineUsers);
+    });
+    
+    socket.on('newuser', function(data){
+      console.log(&quot;new user recieved&quot; + data.name);
+      onlineUsers[socket.id] =  data.name;
+      io.emit('online', onlineUsers);
+    });
+    
+    socket.on('disconnect', function() {
+      console.log(socket.id + &quot; client disconnected&quot;);
+      delete onlineUsers[socket.id];
+      io.emit('online', onlineUsers);
+    });
+  });
+  console.log(&quot;Done.....&quot;);
+  
+    
+    
+  console.log(&quot;Setup socket.io emitter for messages!!!!&quot;);
+  r.db('messages_db').table('messages')
+  .changes()
+  .run()
+  .then(function(cursor) {
+    cursor.each(function(err, result) {
+      console.log(result);
+      io.emit('new_message', result);
+    });
+  });
+  console.log(&quot;Done!!!!&quot;);
+  
+  process.on('uncaughtException', function(err) {
+    console.log(err);
+  });
+  
+  //Serve the static html page.
+  var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
+  server.listen(port);
+  
+  app.use('/', express.static(__dirname + '/public'));
+  app.use('/static', express.static(__dirname + '/bower_components'));
+  
+  console.log(&quot;listening on port: &quot; + port);
+  
+  // End main Program
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  // ###########################################################################
+  
+});// End Database Setup Checker...</code></pre>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/mr-doc/mr-doc">Mr. Doc </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Mr. Doc is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="js/twitter-widget.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-transition.min.js"></script>
+    <script src="js/bootstrap-scrollspy.min.js"></script>
+    <script src="js/bootstrap-dropdown.min.js"></script>
+    <script src="js/bootstrap-collapse.min.js"></script>
+    <script src="js/bootstrap-affix.min.js"></script>
+    <script src="js/prism.min.js"></script>
+    <script src="js/index.min.js"></script>
+  </body>
+</html>

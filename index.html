@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" charset="utf-8">
+    <title>mr-doc</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/cayman.min.css">
+    <link rel="stylesheet" href="css/prism.min.css">
+    <link rel="stylesheet" href="css/index.min.css">
+    <link rel="stylesheet" href="css/docs.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+  </head>
+  <body data-spy="scroll" data-target=".scrollspy">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a class="brand">Mr. Doc</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right sponsored"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header id="overview" class="jumbotron subhead">
+      <div class="container">
+        <h1>mr-doc</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="span3 bs-docs-sidebar">
+          <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li class="active"><a href="index.html">Main</a></li>
+            <li><a href="app.js.html">app.js</a></li>
+            <li><a href="connect.js.html">connect.js</a></li>
+          </ul>
+          <div class="scrollspy">
+            <ul class="nav nav-list bs-docs-sidenav affix-top">
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <section id="Main" class="readme"><p><a href="https://uc-slack.herokuapp.com"><img src="https://uc-slack.herokuapp.com/badge.svg" alt="Slack Status"></a></p>
+<h1>realtime-chat-RethinkDB</h1>
+<p>A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB</p>
+<h2>Need to know info:</h2>
+<p>RethinkDB - Node Installation Info: https://www.rethinkdb.com/docs/install-drivers/javascript/</p>
+<p>RethinkDB - Server Installation Info: https://www.rethinkdb.com/docs/install/</p>
+<h2>Install RethinkDB on Ubuntu</h2>
+<p>I do all of my development for opensource projects on Cloud9 (http://c9.io). And because of that, ubuntu is their choice flavor of linux.</p>
+<p>To install RethinkDB paste the following into your terminal and run them:</p>
+<pre><code class="language-Shell">source /etc/lsb-release &amp;&amp; echo &quot;deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main&quot; | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install rethinkdb
+</code></pre>
+<h2>Run RethinkDB on Cloud9</h2>
+<p>We don't want to use port 8080 on Cloud9 for the rethinkdb admin console. This port is used by c9 to display your web project, so we don't want to block that port for use. So instead use the following to run rethinkdb:</p>
+<p><code>rethinkdb --bind all --http-port 8081</code></p>
+<h2>Install Dependencies</h2>
+<p>To install the dependencies run the following commands</p>
+<pre><code class="language-shell">$ npm install -g bower # globablly install Bower package manager
+$ npm install          # install local npm build / test dependencies
+$ bower install        # install local javascript and css dependencies
+</code></pre>
+<h2>Run the app</h2>
+<p>You can run the app with the following command <code>node app.js</code>. You can then go to your browser and view the application.</p>
+<p>Type text in the box and hit send, it should start working!</p>
+<h2>Run Tests</h2>
+<p>To run test you should run the following commands:</p>
+<pre><code class="language-shell">$ node app.js       # starts server
+$ grunt test        # tests against server
+</code></pre>
+<p>Todo</p>
+<ul>
+<li><s>Jasmine Tests</s></li>
+<li><s>Test new user socket</s></li>
+<li><s>Test user change name socket</s></li>
+<li>Test new messages</li>
+<li>Test get all messages</li>
+</ul>
+</section>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Documentation generated with <a href="https://github.com/mr-doc/mr-doc">Mr. Doc </a> created by <a href="https://twitter.com/FGRibreau" data-show-count="false" class="twitter-follow-button">Francois-Guillaume Ribreau </a></p>
+        <p>Mr. Doc is sponsored by <a href="http://bringr.net/?btt" title="Outil d'analyse des réseaux sociaux" class="bringr">Bringr </a> and <a href="https://redsmin.com/?btt" title="Full Redis GUI" class="redsmin">Redsmin</a></p>
+        <p>Theme borrowed from Twitter Bootstrap</p>
+      </div>
+    </footer>
+    <script src="js/twitter-widget.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap-transition.min.js"></script>
+    <script src="js/bootstrap-scrollspy.min.js"></script>
+    <script src="js/bootstrap-dropdown.min.js"></script>
+    <script src="js/bootstrap-collapse.min.js"></script>
+    <script src="js/bootstrap-affix.min.js"></script>
+    <script src="js/prism.min.js"></script>
+    <script src="js/index.min.js"></script>
+  </body>
+</html>
