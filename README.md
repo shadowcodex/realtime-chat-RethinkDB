@@ -65,7 +65,7 @@ Todo
 * Test get all messages
 * 
 
-## Generat Documentation
+## Generate Documentation
 
 To generate documentation then you just have to run the following command:
 
