@@ -15,9 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: "../bower_components/socket.io-client/socket.io.js", included: true},
-      {pattern: "specs/helpers.js", included: true},
-      {pattern: "specs/*.spec.js", included: true}
+      "../bower_components/socket.io-client/socket.io.js",
+      "../bower_components/jquery/dist/jquery.min.js",
+      "../public/js/connect.js",
+      "specs/helpers.js",
+      "specs/*.spec.js"
     ],
 
 
@@ -49,7 +51,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_ERROR,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -67,6 +69,12 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultanous
-    concurrency: Infinity
+    concurrency: Infinity,
+    
+    // setup rpoxy
+    proxies: {
+      '/message/all': 'http://localhost:8080/message/all',
+      '/message/send': 'http://localhost:8080/message/send'
+    }
   })
 }

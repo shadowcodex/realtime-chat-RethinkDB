@@ -1,5 +1,5 @@
 /*global helpers, expect*/
-describe("Test All User Sockets", function(){
+describe("Sockets", function(){
     var h = helpers;
 
     var socketURL = 'http://localhost:8080';
@@ -71,6 +71,16 @@ describe("Test All User Sockets", function(){
         });
         chatUser.name = h.randomInt(10154135);
         testNameChange(chatUser);
+    });
+    
+    it('Should broadcast message to all users', function(done){
+        var message = {message: "hello", name: "Shannon"};
+        client.on('new_message', function(data){
+            expect(data.new_val.message).toBe(message.message);
+            expect(data.new_val.name).toBe(message.name);
+            done();
+        });
+        sendMessage("/message/send", message);
     });
     
     

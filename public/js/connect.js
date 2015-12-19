@@ -8,29 +8,58 @@ if(localStorage.getItem("Name") === null || localStorage.getItem("Name") === "nu
 } else {
     $('#TheName').val(localStorage.getItem("Name"));  
 }
-
+var checkTest = function(){return true;};
 
 // loads all previous messages
-$.get('/message/all', function(result) {
-    var messages = "";
-    
-    messages += '<li>';
-    messages += '<br>';
-    messages += '<div style="height: 2px; color:red; background-color: red; text-align: center">';
-    messages += '<span style="background-color: white; position: relative; top: -0.6em;">';
-    messages += '&nbsp;Messages Before You Logged On&nbsp;';
-    messages += '</span>';
-    messages += '</div>';
-    messages += '<br>';
-    messages += '</li>';
-    messages += '<li></li>';
-    messages += '<li><span class="notification">[Showing last 100 messages]</li>';
-    result.map(function(obj) {
-        messages += '<li><span class="datetime">['+ obj.date + ']</span> ' + obj.name + ': ' + obj.message + '</li>';
-    });
-    
-    $('.messages').html(messages);
-});
+var loadMessages = function(url){
+  var xhrstatus;
+  
+  $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(result, status, xhr) {
+            var messages = "";
+      
+            messages += '<li>';
+            messages += '<br>';
+            messages += '<div style="height: 2px; color:red; background-color: red; text-align: center">';
+            messages += '<span style="background-color: white; position: relative; top: -0.6em;">';
+            messages += '&nbsp;Messages Before You Logged On&nbsp;';
+            messages += '</span>';
+            messages += '</div>';
+            messages += '<br>';
+            messages += '</li>';
+            messages += '<li></li>';
+            messages += '<li><span class="notification">[Showing last 100 messages]</li>';
+            result.map(function(obj) {
+                messages += '<li><span class="datetime">['+ obj.date + ']</span> ' + obj.name + ': ' + obj.message + '</li>';
+            });
+            
+            $('.messages').html(messages);  
+            xhrstatus = xhr.status;
+        } 
+     });
+  return xhrstatus;
+};
+console.log(loadMessages("/message/all"));
+
+// Setup message send function
+var sendMessage = function(url, data){
+  var xhrstatus;
+  xhrstatus = $.ajax({
+    url:url,
+    type: 'post',
+    data: data,
+    dataType: 'json',
+    async: false,
+    success: function(result, status, xhr){
+      console.log(result);
+    }
+  });
+  return xhrstatus.status;
+};
 
 //Hit enter to submit form bind...
 $('#TheInput').bind("enterKey",function(e){
@@ -40,9 +69,7 @@ $('#TheInput').bind("enterKey",function(e){
 
     // Set session variable to remember typed name...
     localStorage.setItem("Name", name);
-    $.post('/message/send', {message: message, name: name}, function(result) {
-    console.log(result);
-    });
+    console.log(sendMessage("/message/send", {message: message, name: name}));
   
     $('#TheInput').val("");
 });
@@ -63,16 +90,13 @@ $('#TheClear').click(function() {
 
 // sends a message to the server
 $('#TheButton').click(function() {
-
-console.log("Submitting message!");
-var message = $('#TheInput').val();
-var name = $('#TheName').val();
-
-// Set session variable to remember typed name...
-localStorage.setItem("Name", name);
-  $.post('/message/send', {message: message, name: name}, function(result) {
-    console.log(result);
-  });
+  console.log("Submitting message!");
+  var message = $('#TheInput').val();
+  var name = $('#TheName').val();
+  
+  // Set session variable to remember typed name...
+  localStorage.setItem("Name", name);
+  sendMessage("/message/send", {message: message, name: name});
 });
 
 // Send username

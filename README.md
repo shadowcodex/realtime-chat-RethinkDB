@@ -5,9 +5,9 @@ A foray into realtime communications. A base for our realtime editor. This versi
 
 ## Need to know info:
 
-RethinkDB - Node Installation Info: https://www.rethinkdb.com/docs/install-drivers/javascript/
+RethinkDB - Node Installation Info: [https://www.rethinkdb.com/docs/install-drivers/javascript/](https://www.rethinkdb.com/docs/install-drivers/javascript/)
 
-RethinkDB - Server Installation Info: https://www.rethinkdb.com/docs/install/
+RethinkDB - Server Installation Info: [https://www.rethinkdb.com/docs/install/](https://www.rethinkdb.com/docs/install/)
 
 
 ## Install RethinkDB on Ubuntu
