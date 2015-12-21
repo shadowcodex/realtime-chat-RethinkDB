@@ -6,8 +6,10 @@
 ![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
 ![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
-# realtime-chat-RethinkDB
-A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB
+# Realtime Chat with RethinkDB
+This is an example of using NodeJS and RethinkDB along with Express and SocketIO to create a realtime chatroom. It should be a fairly simple example to follow, and if not you can jump in the Slack and ask questions.
+
+To install, clone or download this repository to your local machine and follow the steps outlined in the sections below.
 
 Full Documentation Available [Documentation Link](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 
