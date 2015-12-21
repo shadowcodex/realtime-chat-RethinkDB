@@ -13,7 +13,11 @@ module.exports = function(grunt) {
       mrdoc: {
         all: {
           src: 'src',
-          target: 'docs'
+          target: 'docs',
+          options: {
+            title: 'Realtime Chat with RethinkDB',
+            theme: 'cayman'
+          }
         }
       },
       copy: {

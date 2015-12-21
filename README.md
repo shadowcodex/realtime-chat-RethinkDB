@@ -5,6 +5,8 @@ A foray into realtime communications. A base for our realtime editor. This versi
 
 Full Documentation Available [Documentation Link](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 
+To View Repository [Goto Github](https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB)
+
 ## Need to know info:
 
 RethinkDB - Node Installation Info: [https://www.rethinkdb.com/docs/install-drivers/javascript/](https://www.rethinkdb.com/docs/install-drivers/javascript/)

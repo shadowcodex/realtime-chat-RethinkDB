@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width" charset="utf-8">
-    <title>mr-doc</title>
+    <title>Realtime Chat with RethinkDB</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/cayman.min.css">
     <link rel="stylesheet" href="css/prism.min.css">
@@ -22,7 +22,7 @@
     </div>
     <header id="overview" class="jumbotron subhead">
       <div class="container">
-        <h1>mr-doc</h1>
+        <h1>Realtime Chat with RethinkDB</h1>
         <p class="lead"></p>
       </div>
     </header>
@@ -38,10 +38,37 @@
             <ul class="nav nav-list bs-docs-sidenav affix-top">
               <li><a href="#express"><i class="alert alert-success"></i><span>express</span></a>
               </li>
+              <li><a href="#server"><i class="alert alert-success"></i><span>server</span></a>
+              </li>
+              <li><a href="#async"><i class="alert alert-success"></i><span>async</span></a>
+              </li>
+              <li><a href="#io"><i class="alert alert-success"></i><span>io</span></a>
+              </li>
+              <li><a href="#r"><i class="alert alert-success"></i><span>r</span></a>
+              </li>
+              <li><a href="#bodyParser"><i class="alert alert-success"></i><span>bodyParser</span></a>
+              </li>
+              <li><a href="#onlineUsers"><i class="alert alert-success"></i><span>onlineUsers</span></a>
+              </li>
+              <li><a href="#main"><i class="alert alert-info"></i><span>main</span></a>
+              </li>
+              <li><a href="#createSock"><i class="alert alert-info"></i><span>createSock</span></a>
+              </li>
+              <li><a href="#createEmitter"><i class="alert alert-info"></i><span>createEmitter</span></a>
+              </li>
+              <li><a href="#serveStaticFiles"><i class="alert alert-info"></i><span>serveStaticFiles</span></a>
+              </li>
+              <li><a href="#sendOnlineUsers"><i class="alert alert-info"></i><span>sendOnlineUsers</span></a>
+              </li>
+              <li><a href="#setupRoutes"><i class="alert alert-info"></i><span>setupRoutes</span></a>
+              </li>
+              <li><a href="#if"><i class="alert alert-info"></i><span>if</span></a>
+              </li>
             </ul>
           </div>
         </div>
         <div class="span9">
+          <div class="description"></div>
           <section id="express">
             <h1>express</h1>
             <h5 class="subheader"></h5>
@@ -49,110 +76,383 @@
               <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>express</span><span>&nbsp;</span>
             </p>
           </section>
-          <div class="description"></div>
+          <div class="description"><p>Express Used for Routing</p></div>
           <pre><code class="language-javascript">var express = require('express');
-var app = express();
-var server = require(&quot;http&quot;).createServer(app);
-var async = require('async');
-var io = require('socket.io')(server);
-var r = require('rethinkdbdash')();
-var bodyParser = require('body-parser');
-
-var onlineUsers = {};
-var online = 0;
-
-console.log(&quot;Done!&quot;);
-
-// console.log(&quot;Connect to RethinkDB!!&quot;);
-// var connection = null;
-// r.connect( {host: 'localhost', port: 28015}, function(err, conn) {
-//     if (err) throw err;
-//     connection = conn;
-//     console.log(&quot;Done!!&quot;);
-// });
-
-console.log(&quot;Setup databases if they don't already exist...&quot;);
-async.waterfall([
-  function(finished) {
-    console.log(&quot;Starting waterfall&quot;);
-    r.dbList().contains('messages_db')
-      .run()
-      .then(function(result) {
-        finished(null, result);
-      })
-      .error(function(err) {
-        finished(err);
-      });
-  },
-  function(dbExists, finished) {
-    console.log(&quot;Check dbexits&quot;);
-    if (dbExists === false) {
-      r.dbCreate('messages_db')
-        .run()
-        .then(function() {
-          finished(null);
-        })
-        .error(function(err) {
-          finished(err);
-        });
-    } else {
-      finished(null);
-    }
-  },
-  function(finished) {
-    r.db('messages_db').tableList().contains('messages')
-      .run()
-      .then(function(result) {
-        finished(null,result);
-      })
-      .error(function(err) {
-        finished(err);
-      });
-  },
-  function(tableExists, finished) {
-    if (tableExists === false) {
-      r.db('messages_db').tableCreate('messages')
-        .run()
-        .then(function(result) {
-          finished(null, false);
-        })
-        .error(function(err) {
-          finished(err);
-        });
-    } else {
-      finished(null, true);
-    }
-  },
-  function(tableIndexed, finished) {
-    console.log(&quot;Check Index&quot;);
-    if (tableIndexed === false) {
-      r.db('messages_db').table('messages').indexCreate('date')
-        .run()
-        .then(function(result) {
-          finished(null);
-        })
-        .error(function(err) {
-          console.log(&quot;Error indexing... : &quot; + err);
-          finished(err);
-        });
-    } else {
-      finished(null);
-    }
-  }
-], function(err) {
-  if (err) throw err;
-  console.log(&quot;Done with table evaluation...&quot;);
+var app = express();</code></pre>
+          <section id="server">
+            <h1>server</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>server</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>HTTP Server used to serve express routes and static files</p></div>
+          <pre><code class="language-javascript">var server = require(&quot;http&quot;).createServer(app);</code></pre>
+          <section id="async">
+            <h1>async</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>async</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>Waterfall library used to run async tasks in sync order</p></div>
+          <pre><code class="language-javascript">var async = require('async');</code></pre>
+          <section id="io">
+            <h1>io</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>io</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>Socket.IO Library used to send realtime messages via websockets</p></div>
+          <pre><code class="language-javascript">var io = require('socket.io')(server);</code></pre>
+          <section id="r">
+            <h1>r</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>r</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>RethinkDBDash used to setup and use RethinkDB in NodeJS Easily Without having to worry about setting up connections and such.</p></div>
+          <pre><code class="language-javascript">var r = require('rethinkdbdash')();</code></pre>
+          <section id="bodyParser">
+            <h1>bodyParser</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>bodyParser</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>BodyParser used to parse data coming into a route</p></div>
+          <pre><code class="language-javascript">var bodyParser = require('body-parser');</code></pre>
+          <section id="onlineUsers">
+            <h1>onlineUsers</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>onlineUsers</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>An array and count of online users set up to relay back to clients</p></div>
+          <pre><code class="language-javascript">var onlineUsers = {};
+var online = 0;</code></pre>
+          <section id="main">
+            <h1>main</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>main()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>Main Server Side Program - Realtime Chat with RethinkDB</p></div>
+          <pre><code class="language-javascript">var main = function(){
+  async.waterfall([
+   function(finished) {
+     
+     // Check if the database for messages exists or not.
+     r.dbList().contains('messages_db')
+       .run()
+       .then(function(result) {
+         // return result to the next waterfall
+         finished(null, result);
+       })
+       .error(function(err) {
+         finished(err);
+       });
+   },
+   function(dbExists, finished) {
+     // if it doesn't exist create it. Otherwise move on.
+     if (dbExists === false) {
+       r.dbCreate('messages_db')
+         .run()
+         .then(function() {
+           // return null and move to next waterfall
+           finished(null);
+         })
+         .error(function(err) {
+           finished(err);
+         });
+     } else {
+       // return null and move to next waterfall
+       finished(null);
+     }
+   },
+   function(finished) {
+     // Check if the database contains a table for messages.
+     r.db('messages_db').tableList().contains('messages')
+       .run()
+       .then(function(result) {
+         // return the result to the next waterfall
+         finished(null,result);
+       })
+       .error(function(err) {
+         finished(err);
+       });
+   },
+   function(tableExists, finished) {
+     // If the table doesn't exist, then create it. Otherwise mvoe on.
+     if (tableExists === false) {
+       r.db('messages_db').tableCreate('messages')
+         .run()
+         .then(function(result) {
+           // Move on to next waterfall
+           finished(null, false);
+         })
+         .error(function(err) {
+           finished(err);
+         });
+     } else {
+       // Move on to next waterfall
+       finished(null, true);
+     }
+   },
+   function(tableIndexed, finished) {
+     // If the table didn't exist and we had to create it. Then create an index.
+     // Otherwise move on.
+     if (tableIndexed === false) {
+       r.db('messages_db').table('messages').indexCreate('date')
+         .run()
+         .then(function(result) {
+           finished(null);
+         })
+         .error(function(err) {
+           console.log(&quot;Error indexing... : &quot; + err);
+           finished(err);
+         });
+     } else {
+       finished(null);
+     }
+   }
+ ], function(err) {
+   if (err) throw err;
+   
+   // This is the finall waterfall. Start the applicaiton in here so as to make
+   // Sure that the program is done running first.
+   
+   
+   // Start Main Program
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   
+   // Setup Express Routes
+   setupRoutes(app, r);
+   // Setup Socket Connection and Information
+   createSock(io);
+   // Setup socket emitter for when database changes happen
+   createEmitter(io, r);
+   // Setup express to serve the static files
+   serveStaticFiles(server, app);
+   
+   process.on('uncaughtException', function(err) {
+     console.log(err);
+   });
+   
+   // End main Program
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   // ###########################################################################
+   
+ });// End Database Setup Checker...
+};</code></pre>
+          <section id="createSock">
+            <h1>createSock</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>createSock()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>io</td>
+                <td>object</td>
+                <td><p>The Socket.IO Reference</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Creates the socket information for Socket.IO</p></div>
+          <pre><code class="language-javascript">var createSock = function(io){
+  //Create socket.io event
+  console.log(&quot;Setup socket.io connection.....&quot;);
+  io.on('connection', function(socket) {
+    console.log('New client connected ' + socket.id);
+    
+    socket.on('namechange', function(data){
+      console.log(socket.id + &quot; Changed his/her name&quot;);
+      onlineUsers[socket.id] =  data.name;
+      sendOnlineUsers(io, onlineUsers);
+    });
+    
+    socket.on('newuser', function(data){
+      console.log(&quot;new user recieved&quot; + data.name);
+      onlineUsers[socket.id] =  data.name;
+      sendOnlineUsers(io, onlineUsers);
+    });
+    
+    socket.on('disconnect', function() {
+      console.log(socket.id + &quot; client disconnected&quot;);
+      delete onlineUsers[socket.id];
+      sendOnlineUsers(io, onlineUsers);
+    });
+  });
+  console.log(&quot;Done.....&quot;);
+};</code></pre>
+          <section id="createEmitter">
+            <h1>createEmitter</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>createEmitter()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>io</td>
+                <td>object</td>
+                <td><p>The Socket.IO Reference</p></td>
+              </tr>
+              <tr>
+                <td>r</td>
+                <td>object</td>
+                <td><p>The RethinkDB Reference</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Sets up the socket emitter for when new messages hit the database</p></div>
+          <pre><code class="language-javascript">var createEmitter = function(io, r){
+  console.log(&quot;Setup socket.io emitter for messages!!!!&quot;);
+  r.db('messages_db').table('messages')
+  .changes()
+  .run()
+  .then(function(cursor) {
+    cursor.each(function(err, result) {
+      console.log(result);
+      io.emit('new_message', result);
+    });
+  });
+  console.log(&quot;Done!!!!&quot;);
+}</code></pre>
+          <section id="serveStaticFiles">
+            <h1>serveStaticFiles</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>serveStaticFiles()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>server</td>
+                <td>object</td>
+                <td><p>The Express-HTTP Reference</p></td>
+              </tr>
+              <tr>
+                <td>app</td>
+                <td>object</td>
+                <td><p>The Express Reference</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Makes sure we have the right port to serve the files from, and setups express static routing.</p></div>
+          <pre><code class="language-javascript">var serveStaticFiles = function(server, app){
+  //Serve the static html page.
+  var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
+  server.listen(port);
   
-  // Start Main Program
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
+  app.use('/', express.static(__dirname + '/public'));
+  app.use('/static', express.static(__dirname + '/bower_components'));
   
-  
+  console.log(&quot;listening on port: &quot; + port);
+}</code></pre>
+          <section id="sendOnlineUsers">
+            <h1>sendOnlineUsers</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>sendOnlineUsers()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>io</td>
+                <td>object</td>
+                <td><p>The Socket.IO Reference</p></td>
+              </tr>
+              <tr>
+                <td>onlineUsers</td>
+                <td>Array</td>
+                <td><p>Array of Online Users</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Function to send list of online users through socket</p></div>
+          <pre><code class="language-javascript">var sendOnlineUsers = function(io, onlineUsers){
+  io.emit('online', onlineUsers);
+}</code></pre>
+          <section id="setupRoutes">
+            <h1>setupRoutes</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">function</div><span>&nbsp;</span><span>setupRoutes()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th style="width:20%">Option name</th>
+                <th style="width:20%">Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>app</td>
+                <td>object</td>
+                <td><p>The Express Reference</p></td>
+              </tr>
+              <tr>
+                <td>r</td>
+                <td>object</td>
+                <td><p>The RethinkDB Reference</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="description"><p>Function to set up all routes for the application. Sets up send and get messages</p></div>
+          <pre><code class="language-javascript">var setupRoutes = function(app, r){
   app.use(bodyParser.json()); // for parsing application/json
   app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
   
@@ -196,69 +496,18 @@ async.waterfall([
       });
   });
   console.log(&quot;Done&quot;);
-    
-  //Create socket.io event
-  console.log(&quot;Setup socket.io connection.....&quot;);
-  io.on('connection', function(socket) {
-    console.log('New client connected ' + socket.id);
-    
-    socket.on('namechange', function(data){
-      console.log(socket.id + &quot; Changed his/her name&quot;);
-      onlineUsers[socket.id] =  data.name;
-      io.emit('online', onlineUsers);
-    });
-    
-    socket.on('newuser', function(data){
-      console.log(&quot;new user recieved&quot; + data.name);
-      onlineUsers[socket.id] =  data.name;
-      io.emit('online', onlineUsers);
-    });
-    
-    socket.on('disconnect', function() {
-      console.log(socket.id + &quot; client disconnected&quot;);
-      delete onlineUsers[socket.id];
-      io.emit('online', onlineUsers);
-    });
-  });
-  console.log(&quot;Done.....&quot;);
-  
-    
-    
-  console.log(&quot;Setup socket.io emitter for messages!!!!&quot;);
-  r.db('messages_db').table('messages')
-  .changes()
-  .run()
-  .then(function(cursor) {
-    cursor.each(function(err, result) {
-      console.log(result);
-      io.emit('new_message', result);
-    });
-  });
-  console.log(&quot;Done!!!!&quot;);
-  
-  process.on('uncaughtException', function(err) {
-    console.log(err);
-  });
-  
-  //Serve the static html page.
-  var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 80;
-  server.listen(port);
-  
-  app.use('/', express.static(__dirname + '/public'));
-  app.use('/static', express.static(__dirname + '/bower_components'));
-  
-  console.log(&quot;listening on port: &quot; + port);
-  
-  // End main Program
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  // ###########################################################################
-  
-});// End Database Setup Checker...</code></pre>
+}</code></pre>
+          <section id="if">
+            <h1>if</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>&nbsp;</span><span>if()</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>Call Main Function</p></div>
+          <pre><code class="language-javascript">if (require.main === module) {
+    main();
+}</code></pre>
         </div>
       </div>
     </div>
