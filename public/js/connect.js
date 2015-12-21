@@ -35,7 +35,7 @@ var checkLocalStorage = function(){
   } else {
       $('#TheName').val(localStorage.getItem("Name"));  
   }
-}
+};
 
 /**
  * Function to load all messages from a certain url route
@@ -132,7 +132,7 @@ var inputBinding = function(){
     localStorage.setItem("Name", name);
     sendMessage("/message/send", {message: message, name: name});
   });
-}
+};
 
 /**
  * Binds set username button and socket event for sending initial name.
@@ -149,7 +149,7 @@ var usernameBinding = function(socket){
   socket.on('connect', function(){
     socket.emit('newuser', { name: localStorage.getItem("Name")});  
   }); 
-}
+};
 
 /**
  * Binds the socket recieve event of online users to display current online users
@@ -167,7 +167,7 @@ var bindOnlineUsers = function(socket){
     userlist += "</ul>";
     $('#TheOnlineUsers').html(userlist);
   });
-}
+};
 
 /**
  * Binds the socket recieve event of new message to display new messages
@@ -179,7 +179,7 @@ var bindNewMessages = function(socket){
   console.log(data);
   $('.messages').prepend("<li><span class='datetime'>[" + data.new_val.date + "]</span> " + data.new_val.name + ": " + data.new_val.message + "</li>");
   });
-}
+};
 
 /**
  * Main Client Side Program - Client Side Realtime Chat
@@ -206,6 +206,6 @@ var main = function(){
   
   // Bind Socket for Messages
   bindNewMessages(socket);
-}
+};
 main();
 

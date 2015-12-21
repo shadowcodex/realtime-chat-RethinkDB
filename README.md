@@ -1,4 +1,9 @@
 [![Slack Status](https://uc-slack.herokuapp.com/badge.svg)](https://uc-slack.herokuapp.com)
+[![Visit Unrestricted Coding](https://img.shields.io/badge/Visit-Unrestricted%20Coding-blue.svg)](http://unrestrictedcoding.com)
+![License](https://img.shields.io/badge/LICENSE-MIT-ff69b4.svg)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
+![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
+![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
 # realtime-chat-RethinkDB
 A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB

@@ -218,7 +218,7 @@ var createEmitter = function(io, r){
     });
   });
   console.log("Done!!!!");
-}
+};
 
 /**
  * Makes sure we have the right port to serve the files from, and setups express static routing.
@@ -234,7 +234,7 @@ var serveStaticFiles = function(server, app){
   app.use('/static', express.static(__dirname + '/bower_components'));
   
   console.log("listening on port: " + port);
-}
+};
 
 /**
  * Function to send list of online users through socket
@@ -243,7 +243,7 @@ var serveStaticFiles = function(server, app){
  */
 var sendOnlineUsers = function(io, onlineUsers){
   io.emit('online', onlineUsers);
-}
+};
 
 /**
  * Function to set up all routes for the application. Sets up send and get messages
@@ -294,7 +294,7 @@ var setupRoutes = function(app, r){
       });
   });
   console.log("Done");
-}
+};
 
 
 
