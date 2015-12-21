@@ -105,7 +105,7 @@
   } else {
       $('#TheName').val(localStorage.getItem(&quot;Name&quot;));  
   }
-}</code></pre>
+};</code></pre>
           <section id="loadMessages">
             <h1>loadMessages</h1>
             <h5 class="subheader"></h5>
@@ -245,7 +245,7 @@
     localStorage.setItem(&quot;Name&quot;, name);
     sendMessage(&quot;/message/send&quot;, {message: message, name: name});
   });
-}</code></pre>
+};</code></pre>
           <section id="usernameBinding">
             <h1>usernameBinding</h1>
             <h5 class="subheader"></h5>
@@ -281,7 +281,7 @@
   socket.on('connect', function(){
     socket.emit('newuser', { name: localStorage.getItem(&quot;Name&quot;)});  
   }); 
-}</code></pre>
+};</code></pre>
           <section id="bindOnlineUsers">
             <h1>bindOnlineUsers</h1>
             <h5 class="subheader"></h5>
@@ -318,7 +318,7 @@
     userlist += &quot;&lt;/ul&gt;&quot;;
     $('#TheOnlineUsers').html(userlist);
   });
-}</code></pre>
+};</code></pre>
           <section id="bindNewMessages">
             <h1>bindNewMessages</h1>
             <h5 class="subheader"></h5>
@@ -349,7 +349,7 @@
   console.log(data);
   $('.messages').prepend(&quot;&lt;li&gt;&lt;span class='datetime'&gt;[&quot; + data.new_val.date + &quot;]&lt;/span&gt; &quot; + data.new_val.name + &quot;: &quot; + data.new_val.message + &quot;&lt;/li&gt;&quot;);
   });
-}</code></pre>
+};</code></pre>
           <section id="main">
             <h1>main</h1>
             <h5 class="subheader"></h5>
@@ -379,7 +379,7 @@
   
   // Bind Socket for Messages
   bindNewMessages(socket);
-}
+};
 main();</code></pre>
         </div>
       </div>
