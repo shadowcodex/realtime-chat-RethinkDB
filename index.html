@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width" charset="utf-8">
-    <title>mr-doc</title>
+    <title>Realtime Chat with RethinkDB</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/cayman.min.css">
     <link rel="stylesheet" href="css/prism.min.css">
@@ -22,7 +22,7 @@
     </div>
     <header id="overview" class="jumbotron subhead">
       <div class="container">
-        <h1>mr-doc</h1>
+        <h1>Realtime Chat with RethinkDB</h1>
         <p class="lead"></p>
       </div>
     </header>
@@ -43,9 +43,11 @@
           <section id="Main" class="readme"><p><a href="https://uc-slack.herokuapp.com"><img src="https://uc-slack.herokuapp.com/badge.svg" alt="Slack Status"></a></p>
 <h1>realtime-chat-RethinkDB</h1>
 <p>A foray into realtime communications. A base for our realtime editor. This version uses RethinkDB instead of GunDB</p>
+<p>Full Documentation Available <a href="http://unrestricted-coding.github.io/realtime-chat-RethinkDB/">Documentation Link</a></p>
+<p>To View Repository <a href="https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB">Goto Github</a></p>
 <h2>Need to know info:</h2>
-<p>RethinkDB - Node Installation Info: https://www.rethinkdb.com/docs/install-drivers/javascript/</p>
-<p>RethinkDB - Server Installation Info: https://www.rethinkdb.com/docs/install/</p>
+<p>RethinkDB - Node Installation Info: <a href="https://www.rethinkdb.com/docs/install-drivers/javascript/">https://www.rethinkdb.com/docs/install-drivers/javascript/</a></p>
+<p>RethinkDB - Server Installation Info: <a href="https://www.rethinkdb.com/docs/install/">https://www.rethinkdb.com/docs/install/</a></p>
 <h2>Install RethinkDB on Ubuntu</h2>
 <p>I do all of my development for opensource projects on Cloud9 (http://c9.io). And because of that, ubuntu is their choice flavor of linux.</p>
 <p>To install RethinkDB paste the following into your terminal and run them:</p>
@@ -71,14 +73,10 @@ $ bower install        # install local javascript and css dependencies
 <pre><code class="language-shell">$ node app.js       # starts server
 $ grunt test        # tests against server
 </code></pre>
-<p>Todo</p>
-<ul>
-<li><s>Jasmine Tests</s></li>
-<li><s>Test new user socket</s></li>
-<li><s>Test user change name socket</s></li>
-<li>Test new messages</li>
-<li>Test get all messages</li>
-</ul>
+<h2>Generate Documentation</h2>
+<p>To generate documentation then you just have to run the following command:</p>
+<pre><code class="language-shell">$ grunt doc
+</code></pre>
 </section>
         </div>
       </div>
