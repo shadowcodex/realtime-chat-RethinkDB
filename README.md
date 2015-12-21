@@ -1,5 +1,6 @@
 [![Slack Status](https://uc-slack.herokuapp.com/badge.svg)](https://uc-slack.herokuapp.com)
 [![Visit Unrestricted Coding](https://img.shields.io/badge/Visit-Unrestricted%20Coding-blue.svg)](http://unrestrictedcoding.com)
+[![Documentation](https://img.shields.io/badge/View-Documentation-orange.svg)](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 ![License](https://img.shields.io/badge/LICENSE-MIT-ff69b4.svg)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen.svg)
 ![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
