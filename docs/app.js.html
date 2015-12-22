@@ -303,13 +303,13 @@ var online = 0;</code></pre>
     
     socket.on('namechange', function(data){
       console.log(socket.id + &quot; Changed his/her name&quot;);
-      onlineUsers[socket.id] =  data.name;
+      onlineUsers[socket.id] =  validator.escape(data.name);
       sendOnlineUsers(io, onlineUsers);
     });
     
     socket.on('newuser', function(data){
       console.log(&quot;new user recieved&quot; + data.name);
-      onlineUsers[socket.id] =  data.name;
+      onlineUsers[socket.id] =  validator.escape(data.name);
       sendOnlineUsers(io, onlineUsers);
     });
     
@@ -472,7 +472,7 @@ var online = 0;</code></pre>
   app.post('/message/send', function(req,res,next) {
     console.log(&quot;New message incoming!!&quot;);
     var message = validator.escape(req.body.message);
-    var name = req.body.name;
+    var name = validator.escape(req.body.name);
     r.db('messages_db').table('messages')
       .insert({
         name: name,

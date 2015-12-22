@@ -187,13 +187,13 @@ var createSock = function(io){
     
     socket.on('namechange', function(data){
       console.log(socket.id + " Changed his/her name");
-      onlineUsers[socket.id] =  data.name;
+      onlineUsers[socket.id] =  validator.escape(data.name);
       sendOnlineUsers(io, onlineUsers);
     });
     
     socket.on('newuser', function(data){
       console.log("new user recieved" + data.name);
-      onlineUsers[socket.id] =  data.name;
+      onlineUsers[socket.id] =  validator.escape(data.name);
       sendOnlineUsers(io, onlineUsers);
     });
     
@@ -264,7 +264,7 @@ var setupRoutes = function(app, r){
   app.post('/message/send', function(req,res,next) {
     console.log("New message incoming!!");
     var message = validator.escape(req.body.message);
-    var name = req.body.name;
+    var name = validator.escape(req.body.name);
     r.db('messages_db').table('messages')
       .insert({
         name: name,
