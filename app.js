@@ -5,6 +5,11 @@
  */
  
 /**
+ * Validator Library used for sanatizing user input
+ * @type {validator} Validator Library
+ */
+var validator = require('validator');
+/**
  * Express Used for Routing
  * @type  {Express} Express Web Framework
  */
@@ -258,7 +263,7 @@ var setupRoutes = function(app, r){
   console.log("Setup Send Message REST API..");
   app.post('/message/send', function(req,res,next) {
     console.log("New message incoming!!");
-    var message = req.body.message;
+    var message = validator.escape(req.body.message);
     var name = req.body.name;
     r.db('messages_db').table('messages')
       .insert({

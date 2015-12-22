@@ -36,6 +36,8 @@
           </ul>
           <div class="scrollspy">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
+              <li><a href="#validator"><i class="alert alert-success"></i><span>validator</span></a>
+              </li>
               <li><a href="#express"><i class="alert alert-success"></i><span>express</span></a>
               </li>
               <li><a href="#server"><i class="alert alert-success"></i><span>server</span></a>
@@ -69,6 +71,15 @@
         </div>
         <div class="span9">
           <div class="description"></div>
+          <section id="validator">
+            <h1>validator</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-success radius ctx-type">declaration</div><span>&nbsp;</span><span>validator</span><span>&nbsp;</span>
+            </p>
+          </section>
+          <div class="description"><p>Validator Library used for sanatizing user input</p></div>
+          <pre><code class="language-javascript">var validator = require('validator');</code></pre>
           <section id="express">
             <h1>express</h1>
             <h5 class="subheader"></h5>
@@ -460,7 +471,7 @@ var online = 0;</code></pre>
   console.log(&quot;Setup Send Message REST API..&quot;);
   app.post('/message/send', function(req,res,next) {
     console.log(&quot;New message incoming!!&quot;);
-    var message = req.body.message;
+    var message = validator.escape(req.body.message);
     var name = req.body.name;
     r.db('messages_db').table('messages')
       .insert({
