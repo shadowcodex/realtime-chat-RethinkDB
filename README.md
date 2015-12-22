@@ -15,6 +15,10 @@ Full Documentation Available [Documentation Link](http://unrestricted-coding.git
 
 To View Repository [Goto Github](https://github.com/Unrestricted-Coding/realtime-chat-RethinkDB)
 
+## Live Demo
+
+I've setup a live demo at: [http://realtime-chat.unrestrictedcoding.com](http://realtime-chat.unrestrictedcoding.com)
+
 ## Need to know info:
 
 RethinkDB - Node Installation Info: [https://www.rethinkdb.com/docs/install-drivers/javascript/](https://www.rethinkdb.com/docs/install-drivers/javascript/)
