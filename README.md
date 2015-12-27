@@ -7,6 +7,8 @@
 ![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
 # Realtime Chat with RethinkDB
+
+[![Join the chat at https://gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB](https://badges.gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB.svg)](https://gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 This is an example of using NodeJS and RethinkDB along with Express and SocketIO to create a realtime chatroom. It should be a fairly simple example to follow, and if not you can jump in the Slack and ask questions.
 
 To install, clone or download this repository to your local machine and follow the steps outlined in the sections below.
