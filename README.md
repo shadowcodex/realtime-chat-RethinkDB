@@ -6,6 +6,8 @@
 ![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
 ![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
+[![Gitter](https://badges.gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB.svg)](https://gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 # Realtime Chat with RethinkDB
 This is an example of using NodeJS and RethinkDB along with Express and SocketIO to create a realtime chatroom. It should be a fairly simple example to follow, and if not you can jump in the Slack and ask questions.
 
