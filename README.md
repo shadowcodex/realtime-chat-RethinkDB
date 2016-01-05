@@ -6,6 +6,8 @@
 ![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
 ![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
+[![Contribute](https://img.shields.io/badge/Contribute-Click%20Here-lightgrey.svg)](http://contribute.unrestrictedcoding.com/)
+
 [![Gitter](https://badges.gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB.svg)](https://gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # Realtime Chat with RethinkDB
@@ -81,3 +83,9 @@ To generate documentation then you just have to run the following command:
 ```shell
 $ grunt doc
 ```
+
+##  Contribute
+
+To contribute to this project please check our global contribution page by clicking the badge below...
+
+[![Contribute](https://img.shields.io/badge/Contribute-Click%20Here-lightgrey.svg)](http://contribute.unrestrictedcoding.com/)
