@@ -1,4 +1,4 @@
-[![Slack Status](https://uc-slack.herokuapp.com/badge.svg)](https://uc-slack.herokuapp.com)
+[![Visit Facebook Group](https://img.shields.io/badge/Facebook-Visit%20Community-blue.svg)](https://www.facebook.com/groups/204308966622383)
 [![Visit Unrestricted Coding](https://img.shields.io/badge/Visit-Unrestricted%20Coding-blue.svg)](http://unrestrictedcoding.com)
 [![Documentation](https://img.shields.io/badge/View-Documentation-orange.svg)](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 ![License](https://img.shields.io/badge/LICENSE-MIT-ff69b4.svg)
@@ -6,9 +6,7 @@
 ![jsHint](https://img.shields.io/badge/jsHint-Great-green.svg)
 ![build](https://img.shields.io/badge/Build-passing-brightgreen.svg)
 
-[![Contribute](https://img.shields.io/badge/Contribute-Click%20Here-lightgrey.svg)](http://contribute.unrestrictedcoding.com/)
 
-[![Gitter](https://badges.gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB.svg)](https://gitter.im/Unrestricted-Coding/realtime-chat-RethinkDB?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # Realtime Chat with RethinkDB
 This is an example of using NodeJS and RethinkDB along with Express and SocketIO to create a realtime chatroom. It should be a fairly simple example to follow, and if not you can jump in the Slack and ask questions.
@@ -86,6 +84,6 @@ $ grunt doc
 
 ##  Contribute
 
-To contribute to this project please check our global contribution page by clicking the badge below...
+To contribute to this project fork it, make changes, and submit a pull request. For more info visit the facebook community.
 
-[![Contribute](https://img.shields.io/badge/Contribute-Click%20Here-lightgrey.svg)](http://contribute.unrestrictedcoding.com/)
+[![Visit Facebook Group](https://img.shields.io/badge/Facebook-Visit%20Community-blue.svg)](https://www.facebook.com/groups/204308966622383)
