@@ -1,4 +1,3 @@
-[![Visit Facebook Group](https://img.shields.io/badge/Facebook-Visit%20Community-blue.svg)](https://www.facebook.com/groups/204308966622383)
 [![Visit Unrestricted Coding](https://img.shields.io/badge/Visit-Unrestricted%20Coding-blue.svg)](http://unrestrictedcoding.com)
 [![Documentation](https://img.shields.io/badge/View-Documentation-orange.svg)](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 ![License](https://img.shields.io/badge/LICENSE-MIT-ff69b4.svg)
@@ -81,9 +80,3 @@ To generate documentation then you just have to run the following command:
 ```shell
 $ grunt doc
 ```
-
-##  Contribute
-
-To contribute to this project fork it, make changes, and submit a pull request. For more info visit the facebook community.
-
-[![Visit Facebook Group](https://img.shields.io/badge/Facebook-Visit%20Community-blue.svg)](https://www.facebook.com/groups/204308966622383)
