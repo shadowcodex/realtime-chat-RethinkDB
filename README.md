@@ -1,3 +1,6 @@
+[![Discord](https://img.shields.io/discord/630805507782868992.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/GghbTQA)
+
+
 [![Visit Unrestricted Coding](https://img.shields.io/badge/Visit-Unrestricted%20Coding-blue.svg)](http://unrestrictedcoding.com)
 [![Documentation](https://img.shields.io/badge/View-Documentation-orange.svg)](http://unrestricted-coding.github.io/realtime-chat-RethinkDB/)
 ![License](https://img.shields.io/badge/LICENSE-MIT-ff69b4.svg)
